@@ -1,5 +1,6 @@
 package org.kazzleinc.memorySMP.membranes;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.kazzleinc.memorySMP.MemorySMP;
 
@@ -21,7 +22,7 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
     }
 
     @Override
-    public void CooldownDisplay() {
+    public void cooldownDisplay(Player player) {
 
     }
 }

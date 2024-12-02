@@ -1,5 +1,6 @@
 package org.kazzleinc.memorySMP;
 
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.checkerframework.checker.units.qual.N;
 import org.kazzleinc.memorySMP.commands.SwitchPowerCommand;
 import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
 import org.kazzleinc.memorySMP.commands.UsePowerCommand;
@@ -55,7 +55,20 @@ public final class MemorySMP extends JavaPlugin implements Listener {
 
             @Override
             public void run() {
-
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    for (String powerName : getConfig().getConfigurationSection("players." + player.getName() + ".membranes").getKeys(false)) {
+                        if (getConfig().getBoolean("players." + player.getName() + ".membranes." + powerName)) {
+                            switch (powerName) {
+                                case "locked" -> lockedMembraneClass.cooldownDisplay(player);
+                                case "mobility" -> mobilityMembraneClass.cooldownDisplay(player);
+                                case "void" -> voidMembraneClass.cooldownDisplay(player);
+                                case "spirit" -> spiritMembraneClass.cooldownDisplay(player);
+                                case "scorching" -> scorchingMembraneClass.cooldownDisplay(player);
+                                case "gamble" -> gambleMembraneClass.cooldownDisplay(player);
+                            }
+                        }
+                    }
+                }
             }
         }.runTaskTimer(this, 0, 20);
     }
