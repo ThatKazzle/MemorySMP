@@ -30,17 +30,22 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
         if (!isOnCooldown(player.getUniqueId(), cooldowns)) {
             setCooldown(player.getUniqueId(), cooldowns, 120);
 
-            Player targetPlayer = getTargetPlayer(player, 3.5f);
+            if (getTargetPlayer(player, 3.5f) != null) {
+                Player targetPlayer = getTargetPlayer(player, 3.5f);
 
-            lockedSlotList.add(targetPlayer.getUniqueId());
+                lockedSlotList.add(targetPlayer.getUniqueId());
 
-            new BukkitRunnable() {
-                Player playerCheck = targetPlayer;
-                @Override
-                public void run() {
-                    lockedSlotList.remove(playerCheck.getUniqueId());
-                }
-            }.runTaskLater(plugin, 20 * 5);
+                new BukkitRunnable() {
+                    Player playerCheck = targetPlayer;
+                    @Override
+                    public void run() {
+                        lockedSlotList.remove(playerCheck.getUniqueId());
+                    }
+                }.runTaskLater(plugin, 20 * 5);
+            } else {
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.f, 1.f);
+                player.sendMessage(ChatColor.RED + "No players hit.");
+            }
         } else {
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.f, 1.f);
         }
