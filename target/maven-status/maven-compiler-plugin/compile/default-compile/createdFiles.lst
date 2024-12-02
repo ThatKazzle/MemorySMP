@@ -1,0 +1,6 @@
+org\kazzleinc\memorySMP\membranes\LockedMembraneClass.class
+org\kazzleinc\memorySMP\MemorySMP.class
+org\kazzleinc\memorySMP\commands\UsePowerCommand.class
+org\kazzleinc\memorySMP\membranes\ParentMembraneClass.class
+org\kazzleinc\memorySMP\commands\SwitchPowerCommand.class
+org\kazzleinc\memorySMP\commands\TestMembraneCommand.class
