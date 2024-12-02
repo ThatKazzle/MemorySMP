@@ -21,12 +21,12 @@ public class SwitchPowerCommand implements CommandExecutor {
             for (String powerName : plugin.getConfig().getConfigurationSection("players." + sender.getName() + ".membranes").getKeys(false)) {
                 if (plugin.getConfig().getBoolean("players." + sender.getName() + ".membranes." + powerName)) {
                     switch (powerName) {
-                        case "locked" -> plugin.lockedMembraneClass.action2();
-                        case "mobility" -> plugin.mobilityMembraneClass.action2();
-                        case "void" -> plugin.voidMembraneClass.action2();
-                        case "spirit" -> plugin.spiritMembraneClass.action2();
-                        case "scorching" -> plugin.scorchingMembraneClass.action2();
-                        case "gamble" -> plugin.gambleMembraneClass.action2();
+                        case "locked" -> plugin.lockedMembraneClass.action2(sender);
+                        case "mobility" -> plugin.mobilityMembraneClass.action2(sender);
+                        case "void" -> plugin.voidMembraneClass.action2(sender);
+                        case "spirit" -> plugin.spiritMembraneClass.action2(sender);
+                        case "scorching" -> plugin.scorchingMembraneClass.action2(sender);
+                        case "gamble" -> plugin.gambleMembraneClass.action2(sender);
                     }
                 }
             }

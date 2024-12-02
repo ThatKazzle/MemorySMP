@@ -12,12 +12,12 @@ public class ScorchingMembraneClass extends ParentMembraneClass implements Liste
     }
 
     @Override
-    public void action1() {
+    public void action1(Player player) {
 
     }
 
     @Override
-    public void action2() {
+    public void action2(Player player) {
 
     }
 

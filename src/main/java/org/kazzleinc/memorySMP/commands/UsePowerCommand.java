@@ -22,12 +22,12 @@ public class UsePowerCommand implements CommandExecutor {
                  for (String powerName : plugin.getConfig().getConfigurationSection("players." + sender.getName() + ".membranes").getKeys(false)) {
                      if (plugin.getConfig().getBoolean("players." + sender.getName() + ".membranes." + powerName)) {
                          switch (powerName) {
-                             case "locked" -> plugin.lockedMembraneClass.action1();
-                             case "mobility" -> plugin.mobilityMembraneClass.action1();
-                             case "void" -> plugin.voidMembraneClass.action1();
-                             case "spirit" -> plugin.spiritMembraneClass.action1();
-                             case "scorching" -> plugin.scorchingMembraneClass.action1();
-                             case "gamble" -> plugin.gambleMembraneClass.action1();
+                             case "locked" -> plugin.lockedMembraneClass.action1(sender);
+                             case "mobility" -> plugin.mobilityMembraneClass.action1(sender);
+                             case "void" -> plugin.voidMembraneClass.action1(sender);
+                             case "spirit" -> plugin.spiritMembraneClass.action1(sender);
+                             case "scorching" -> plugin.scorchingMembraneClass.action1(sender);
+                             case "gamble" -> plugin.gambleMembraneClass.action1(sender);
                          }
                      }
                  }
