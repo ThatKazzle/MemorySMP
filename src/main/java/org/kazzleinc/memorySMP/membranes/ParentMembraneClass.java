@@ -1,7 +1,10 @@
 package org.kazzleinc.memorySMP.membranes;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -53,5 +56,21 @@ public abstract class ParentMembraneClass {
         } else {
             return "" + ChatColor.RED + seconds + "s";
         }
+    }
+
+    public static Player getTargetPlayer(Player player, double range) {
+        Location eyeLocation = player.getEyeLocation();
+        Vector direction = eyeLocation.getDirection();
+
+        // Perform ray tracing to find entities in the player's line of sight
+        Entity target = player.getWorld().rayTraceEntities(
+                eyeLocation,
+                direction,
+                range,
+                entity -> entity instanceof Player && !entity.equals(player) // Ignore self
+        ).getHitEntity();
+
+        // If the entity is a player, return it
+        return target instanceof Player ? (Player) target : null;
     }
 }
