@@ -26,7 +26,8 @@ public class TestMembraneCommand implements CommandExecutor {
             ItemStack testStack = new ItemStack(Material.NETHER_STAR);
             ItemMeta testStackMeta = testStack.getItemMeta();
 
-            testStackMeta.getPersistentDataContainer().set(plugin.membraneItemKey, PersistentDataType.STRING,  "locked");
+            testStackMeta.getPersistentDataContainer().set(plugin.membraneItemKey, PersistentDataType.STRING,  strings[0]);
+            testStackMeta.setDisplayName(strings[0] + " membrane");
             testStack.setItemMeta(testStackMeta);
 
             sender.getInventory().addItem(testStack);

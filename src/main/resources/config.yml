@@ -1,3 +1,11 @@
 players:
   ItsKazzle:
     membranes:
+      locked: true
+available-membranes:
+  locked: true
+  scorching: true
+  mobility: true
+  gamble: true
+  spirit: true
+  void: true

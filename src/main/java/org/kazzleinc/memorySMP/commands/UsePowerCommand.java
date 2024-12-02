@@ -19,15 +19,30 @@ public class UsePowerCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (commandSender instanceof Player) {
             Player sender = (Player) commandSender;
-            if (!plugin.getConfig().getStringList("players." + sender.getName() + ".membranes").isEmpty()) {
-                 for (String powerName : plugin.getConfig().getStringList("players." + sender.getName() + ".membranes")) {
+                 for (String powerName : plugin.getConfig().getConfigurationSection("players." + sender.getName() + ".membranes").getKeys(false)) {
                      if (plugin.getConfig().getBoolean("players." + sender.getName() + ".membranes." + powerName)) {
-                         sender.sendMessage("you have " + powerName);
+                         switch (powerName) {
+                             case "locked" -> {
+
+                             }
+                             case "mobility" -> {
+
+                             }
+                             case "void" -> {
+
+                             }
+                             case "spirit" -> {
+
+                             }
+                             case "scorching" -> {
+
+                             }
+                             case "gamble" -> {
+
+                             }
+                         }
                      }
                  }
-            } else {
-                sender.sendActionBar("You have no membranes. (also a test message)");
-            }
             return true;
         } else {
             return false;
