@@ -19,4 +19,9 @@ public class ScorchingMembraneClass extends ParentMembraneClass implements Liste
     public void action2() {
 
     }
+
+    @Override
+    public void CooldownDisplay() {
+
+    }
 }

@@ -19,4 +19,9 @@ public class GambleMembraneClass extends ParentMembraneClass implements Listener
     public void action2() {
 
     }
+
+    @Override
+    public void CooldownDisplay() {
+
+    }
 }

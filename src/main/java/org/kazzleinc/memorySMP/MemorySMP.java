@@ -9,6 +9,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.units.qual.N;
 import org.kazzleinc.memorySMP.commands.SwitchPowerCommand;
 import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
@@ -25,12 +26,12 @@ public final class MemorySMP extends JavaPlugin implements Listener {
     UsePowerCommand usePowerCommand = new UsePowerCommand(this);
 
     //membrane classes
-    GambleMembraneClass gambleMembraneClass = new GambleMembraneClass(this);
-    LockedMembraneClass lockedMembraneClass = new LockedMembraneClass(this);
-    MobilityMembraneClass mobilityMembraneClass = new MobilityMembraneClass(this);
-    ScorchingMembraneClass scorchingMembraneClass = new ScorchingMembraneClass(this);
-    SpiritMembraneClass spiritMembraneClass = new SpiritMembraneClass(this);
-    VoidMembraneClass voidMembraneClass = new VoidMembraneClass(this);
+    public GambleMembraneClass gambleMembraneClass = new GambleMembraneClass(this);
+    public LockedMembraneClass lockedMembraneClass = new LockedMembraneClass(this);
+    public MobilityMembraneClass mobilityMembraneClass = new MobilityMembraneClass(this);
+    public ScorchingMembraneClass scorchingMembraneClass = new ScorchingMembraneClass(this);
+    public SpiritMembraneClass spiritMembraneClass = new SpiritMembraneClass(this);
+    public VoidMembraneClass voidMembraneClass = new VoidMembraneClass(this);
 
     @Override
     public void onEnable() {
@@ -49,6 +50,14 @@ public final class MemorySMP extends JavaPlugin implements Listener {
         getCommand("power2").setExecutor(switchPowerCommand);
 
         saveDefaultConfig();
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+
+            }
+        }.runTaskTimer(this, 0, 20);
     }
 
     @Override

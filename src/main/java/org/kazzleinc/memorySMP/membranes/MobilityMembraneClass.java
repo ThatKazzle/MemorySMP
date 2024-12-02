@@ -19,4 +19,9 @@ public class MobilityMembraneClass extends ParentMembraneClass implements Listen
     public void action2() {
 
     }
+
+    @Override
+    public void CooldownDisplay() {
+
+    }
 }

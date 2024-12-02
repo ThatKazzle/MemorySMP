@@ -19,4 +19,9 @@ public class SpiritMembraneClass extends ParentMembraneClass implements Listener
     public void action2() {
 
     }
+
+    @Override
+    public void CooldownDisplay() {
+
+    }
 }
