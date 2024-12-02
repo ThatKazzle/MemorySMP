@@ -63,14 +63,22 @@ public abstract class ParentMembraneClass {
         Vector direction = eyeLocation.getDirection();
 
         // Perform ray tracing to find entities in the player's line of sight
-        Entity target = player.getWorld().rayTraceEntities(
+        if (player.getWorld().rayTraceEntities(
                 eyeLocation,
                 direction,
                 range,
                 entity -> entity instanceof Player && !entity.equals(player) // Ignore self
-        ).getHitEntity();
+        ).getHitEntity() != null) {
+            Entity target = player.getWorld().rayTraceEntities(
+                    eyeLocation,
+                    direction,
+                    range,
+                    entity -> entity instanceof Player && !entity.equals(player) // Ignore self
+            ).getHitEntity();
 
-        // If the entity is a player, return it
-        return target instanceof Player ? (Player) target : null;
+            return target instanceof Player ? (Player) target : null;
+        } else {
+            return null;
+        }
     }
 }
