@@ -13,6 +13,7 @@ import org.checkerframework.checker.units.qual.N;
 import org.kazzleinc.memorySMP.commands.SwitchPowerCommand;
 import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
 import org.kazzleinc.memorySMP.commands.UsePowerCommand;
+import org.kazzleinc.memorySMP.membranes.*;
 
 public final class MemorySMP extends JavaPlugin implements Listener {
 
@@ -23,9 +24,24 @@ public final class MemorySMP extends JavaPlugin implements Listener {
     SwitchPowerCommand switchPowerCommand = new SwitchPowerCommand(this);
     UsePowerCommand usePowerCommand = new UsePowerCommand(this);
 
+    //membrane classes
+    GambleMembraneClass gambleMembraneClass = new GambleMembraneClass(this);
+    LockedMembraneClass lockedMembraneClass = new LockedMembraneClass(this);
+    MobilityMembraneClass mobilityMembraneClass = new MobilityMembraneClass(this);
+    ScorchingMembraneClass scorchingMembraneClass = new ScorchingMembraneClass(this);
+    SpiritMembraneClass spiritMembraneClass = new SpiritMembraneClass(this);
+    VoidMembraneClass voidMembraneClass = new VoidMembraneClass(this);
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+
+        getServer().getPluginManager().registerEvents(gambleMembraneClass, this);
+        getServer().getPluginManager().registerEvents(lockedMembraneClass, this);
+        getServer().getPluginManager().registerEvents(mobilityMembraneClass, this);
+        getServer().getPluginManager().registerEvents(scorchingMembraneClass, this);
+        getServer().getPluginManager().registerEvents(spiritMembraneClass, this);
+        getServer().getPluginManager().registerEvents(voidMembraneClass, this);
 
         getCommand("testmembrane").setExecutor(testMembraneCommand);
 

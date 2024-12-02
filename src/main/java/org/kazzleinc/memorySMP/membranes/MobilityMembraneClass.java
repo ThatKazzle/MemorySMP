@@ -3,10 +3,10 @@ package org.kazzleinc.memorySMP.membranes;
 import org.bukkit.event.Listener;
 import org.kazzleinc.memorySMP.MemorySMP;
 
-public class MoblilityMembraneClass extends ParentMembraneClass implements Listener {
+public class MobilityMembraneClass extends ParentMembraneClass implements Listener {
     MemorySMP plugin;
 
-    public MoblilityMembraneClass(MemorySMP plugin) {
+    public MobilityMembraneClass(MemorySMP plugin) {
         this.plugin = plugin;
     }
 
