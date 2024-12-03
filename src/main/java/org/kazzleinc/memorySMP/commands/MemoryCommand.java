@@ -102,7 +102,9 @@ public class MemoryCommand implements TabExecutor, Listener {
 
         for (String powerName : plugin.getConfig().getConfigurationSection("players." + player.getName() + ".membranes").getKeys(false)) {
             if (plugin.getConfig().getBoolean("players." + player.getName() + ".membranes." + powerName)) {
-                membraneItemMeta.setDisplayName("" + ChatColor.RESET + ChatColor.LIGHT_PURPLE + MemoryUtils.toTitleCase(powerName) + " Membrane");
+                membraneItemMeta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.LIGHT_PURPLE + MemoryUtils.toTitleCase(powerName) + " Membrane");
+                membraneItemMeta.setLore(List.of(ChatColor.LIGHT_PURPLE + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1)));
+
                 membraneStack.setItemMeta(membraneItemMeta);
 
                 gui.setItem(thirdSlotDown, membraneStack);
@@ -117,6 +119,7 @@ public class MemoryCommand implements TabExecutor, Listener {
         ItemMeta confirmStackMeta = confirmStack.getItemMeta();
 
         confirmStackMeta.setItemName("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?");
+        confirmStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 
         confirmStack.setItemMeta(confirmStackMeta);
 
