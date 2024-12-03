@@ -47,6 +47,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(scorchingMembraneClass, this);
         getServer().getPluginManager().registerEvents(spiritMembraneClass, this);
         getServer().getPluginManager().registerEvents(voidMembraneClass, this);
+        getServer().getPluginManager().registerEvents(memoryCommand, this);
 
         getCommand("testmembrane").setExecutor(testMembraneCommand);
 

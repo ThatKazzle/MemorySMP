@@ -73,25 +73,28 @@ public class MemoryCommand implements TabExecutor, Listener {
         Inventory gui = Bukkit.createInventory(player, 54, "" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ");
 
         // Create the red stained glass pane item
-        ItemStack redPane = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-        ItemMeta meta = redPane.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A"); // Set empty display name
-            redPane.setItemMeta(meta);
-        }
+
 
         // Fill the inventory with red stained-glass panes
         for (int i = 0; i < gui.getSize(); i++) {
+            ItemStack redPane = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+            ItemMeta meta = redPane.getItemMeta();
+            if (meta != null) {
+                meta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A"); // Set empty display name
+                //meta.setDisplayName("Index " + i);
+                redPane.setItemMeta(meta);
+            }
+
             gui.setItem(i, redPane);
         }
 
         // Leave specific slots empty
         int centerSlot = 4; // Middle slot of the first row
         int secondSlotDown = centerSlot + 9; // Slot in the second row
-        int thirdSlotDown = (centerSlot + 9) * 2; // Slot in the fifth row
+        int thirdSlotDown = centerSlot + 9 * 2; // Slot in the fifth row
 
-        int fifthSlotDown = (centerSlot + 9) * 4;
-
+        int fifthSlotDown = centerSlot + 9 * 4;
+//4 to 13 to 22
         ItemStack membraneStack = new ItemStack(Material.PHANTOM_MEMBRANE);
         ItemMeta membraneItemMeta = membraneStack.getItemMeta();
 
