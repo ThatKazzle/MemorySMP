@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class ParentMembraneClass {
@@ -68,7 +69,7 @@ public abstract class ParentMembraneClass {
                 direction,
                 range,
                 entity -> entity instanceof Player && !entity.equals(player) // Ignore self
-        ).getHitEntity() != null) {
+        ) != null) {
             Entity target = player.getWorld().rayTraceEntities(
                     eyeLocation,
                     direction,
