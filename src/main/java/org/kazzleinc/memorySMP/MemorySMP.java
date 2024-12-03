@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.kazzleinc.memorySMP.commands.MemoryCommand;
 import org.kazzleinc.memorySMP.commands.SwitchPowerCommand;
 import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
 import org.kazzleinc.memorySMP.commands.UsePowerCommand;
@@ -24,6 +25,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
 
     SwitchPowerCommand switchPowerCommand = new SwitchPowerCommand(this);
     UsePowerCommand usePowerCommand = new UsePowerCommand(this);
+    MemoryCommand memoryCommand = new MemoryCommand(this);
 
     //membrane classes
     public GambleMembraneClass gambleMembraneClass = new GambleMembraneClass(this);
@@ -48,6 +50,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
 
         getCommand("power1").setExecutor(usePowerCommand);
         getCommand("power2").setExecutor(switchPowerCommand);
+        getCommand("memory").setExecutor(memoryCommand);
 
         saveDefaultConfig();
 
@@ -99,4 +102,6 @@ public final class MemorySMP extends JavaPlugin implements Listener {
             }
         }
     }
+
+
 }

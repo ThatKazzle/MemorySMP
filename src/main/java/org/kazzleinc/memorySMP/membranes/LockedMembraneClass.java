@@ -28,9 +28,8 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
     @Override
     public void action1(Player player) {
         if (!isOnCooldown(player.getUniqueId(), cooldowns)) {
-            setCooldown(player.getUniqueId(), cooldowns, 120);
-
             if (getTargetPlayer(player, 3.5f) != null) {
+                setCooldown(player.getUniqueId(), cooldowns, 120);
                 Player targetPlayer = getTargetPlayer(player, 3.5f);
 
                 lockedSlotList.add(targetPlayer.getUniqueId());
