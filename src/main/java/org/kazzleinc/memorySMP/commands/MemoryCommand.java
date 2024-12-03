@@ -129,7 +129,7 @@ public class MemoryCommand implements TabExecutor, Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         // Prevent players from picking up items in the "Memory Upgrade" inventory
-        if (event.getView().getTitle().equals("Memory Upgrade")) {
+        if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             event.setCancelled(true); // Cancel the click
         }
     }
