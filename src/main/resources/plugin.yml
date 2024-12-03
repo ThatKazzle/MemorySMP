@@ -9,3 +9,7 @@ commands:
     usage: "/power1"
   power2:
     usage: "/power2"
+  memory:
+    aliases:
+      - "mem"
+    usage: "/memory [upgrade|info]"

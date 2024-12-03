@@ -17,6 +17,8 @@ import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
 import org.kazzleinc.memorySMP.commands.UsePowerCommand;
 import org.kazzleinc.memorySMP.membranes.*;
 
+import java.util.Objects;
+
 public final class MemorySMP extends JavaPlugin implements Listener {
 
     public NamespacedKey membraneItemKey = new NamespacedKey(this, "membrane_item");
@@ -88,7 +90,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
 
         if (event.getHand() == EquipmentSlot.HAND) {
             if (item.getItemMeta().getPersistentDataContainer().has(membraneItemKey)) {
-                switch (item.getItemMeta().getPersistentDataContainer().get(membraneItemKey, PersistentDataType.STRING)) {
+                switch (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(membraneItemKey, PersistentDataType.STRING))) {
                     case "locked" -> {
 
                     }
@@ -98,6 +100,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 }
 
                 getConfig().set("players." + player.getName() + ".membranes." + item.getItemMeta().getPersistentDataContainer().get(membraneItemKey, PersistentDataType.STRING), true);
+                item.setAmount(item.getAmount() - 1);
                 saveConfig();
             }
         }
