@@ -1,5 +1,7 @@
 package org.kazzleinc.memorySMP.commands;
 
+import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
+import io.papermc.paper.event.player.PlayerPickItemEvent;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.InventoryBlockStartEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -171,6 +175,7 @@ public class MemoryCommand implements TabExecutor, Listener {
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             player.sendMessage("This is the right view to be updating.");
             if (event.getCurrentItem() != null) {
+                event.getInventory().setItem(40, getUnavailableStack());
                 ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
 
                 if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {
@@ -188,28 +193,13 @@ public class MemoryCommand implements TabExecutor, Listener {
 
             if (event.getView().getTopInventory().getItem(13) != null && event.getView().getTopInventory().getItem(13).getItemMeta() != null) {
                 if (event.getView().getTopInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                    if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
+                    if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
                         event.getInventory().setItem(40, getConfirmStack());
                     } else {
                         event.getInventory().setItem(40, getMaxLevelReacedStack());
                     }
                 } else {
                     event.getInventory().setItem(40, getUnavailableStack());
-                }
-            } else {
-                event.getInventory().setItem(40, getUnavailableStack());
-            }
-        }
-    }
-    @EventHandler
-    public void onInventoryPickupItemEvent(InventoryPickupItemEvent event) {
-        Player player = (Player) event.getInventory().getViewers().getFirst();
-        if (event.getInventory().getItem(13) != null && event.getInventory().getItem(13).getItemMeta() != null) {
-            if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
-                    event.getInventory().setItem(40, getConfirmStack());
-                } else {
-                    event.getInventory().setItem(40, getMaxLevelReacedStack());
                 }
             } else {
                 event.getInventory().setItem(40, getUnavailableStack());
