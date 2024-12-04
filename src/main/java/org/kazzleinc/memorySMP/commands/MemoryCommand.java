@@ -196,6 +196,8 @@ public class MemoryCommand implements TabExecutor, Listener {
                 } else {
                     event.getInventory().setItem(40, getUnavailableStack());
                 }
+            } else {
+                event.getInventory().setItem(40, getUnavailableStack());
             }
         }
     }
