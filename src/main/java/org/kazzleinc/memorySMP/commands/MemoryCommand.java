@@ -192,6 +192,10 @@ public class MemoryCommand implements TabExecutor, Listener {
     public void onInventoryInteract(InventoryInteractEvent event) {
         Player player = (Player) event.getWhoClicked();
 
+        player.sendMessage("view title: " + event.getView().getTitle());
+        player.sendMessage("clicked item title: " + player.getItemOnCursor());
+        player.sendMessage("item 13: " + event.getInventory().getItem(13).getItemMeta().getDisplayName());
+        player.sendMessage("has upgraderItemKey: " + String.valueOf(event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)));
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
                 if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
