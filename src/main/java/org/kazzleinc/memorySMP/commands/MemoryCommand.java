@@ -141,6 +141,7 @@ public class MemoryCommand implements TabExecutor, Listener {
         ItemMeta membraneItemMeta = membraneStack.getItemMeta();
 
         membraneItemMeta.setEnchantmentGlintOverride(true);
+        membraneItemMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
 
         for (String powerName : plugin.getConfig().getConfigurationSection("players." + player.getName() + ".membranes").getKeys(false)) {
             if (plugin.getConfig().getBoolean("players." + player.getName() + ".membranes." + powerName)) {
@@ -166,7 +167,6 @@ public class MemoryCommand implements TabExecutor, Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
-            player.sendMessage("This is the right view to be updating.");
             if (event.getCurrentItem() != null) {
                 ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
 

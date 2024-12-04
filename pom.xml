@@ -6,7 +6,7 @@
 
     <groupId>org.kazzleinc</groupId>
     <artifactId>MemorySMP</artifactId>
-    <version>1.7.2</version>
+    <version>1.7.2.1</version>
     <packaging>jar</packaging>
 
     <name>MemorySMP</name>
