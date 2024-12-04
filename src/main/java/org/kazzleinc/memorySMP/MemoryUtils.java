@@ -1,6 +1,11 @@
 package org.kazzleinc.memorySMP;
 
+import org.bukkit.NamespacedKey;
+
 public class MemoryUtils {
+    public static NamespacedKey membraneItemKey;
+    public static NamespacedKey upgraderItemKey;
+
     public static String toTitleCase(String input) {
         if (input == null || input.isEmpty()) {
             return input;

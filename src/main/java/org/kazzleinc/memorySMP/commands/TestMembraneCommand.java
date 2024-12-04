@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.kazzleinc.memorySMP.MemorySMP;
+import org.kazzleinc.memorySMP.UpgraderItemClass;
 
 public class TestMembraneCommand implements CommandExecutor {
     MemorySMP plugin;
@@ -30,7 +31,7 @@ public class TestMembraneCommand implements CommandExecutor {
             testStackMeta.setDisplayName(strings[0] + " membrane");
             testStack.setItemMeta(testStackMeta);
 
-            sender.getInventory().addItem(testStack);
+            sender.getInventory().addItem(UpgraderItemClass.createUpgraderItemStack());
 
             return true;
         } else {
