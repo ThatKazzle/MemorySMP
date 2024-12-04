@@ -8,10 +8,8 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.block.InventoryBlockStartEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -197,6 +195,21 @@ public class MemoryCommand implements TabExecutor, Listener {
                 } else {
                     event.getInventory().setItem(40, getUnavailableStack());
                 }
+            }
+        }
+    }
+    @EventHandler
+    public void onInventoryPickupItemEvent(InventoryPickupItemEvent event) {
+        Player player = (Player) event.getInventory().getViewers().get(0);
+        if (event.getInventory().getItem(13) != null && event.getInventory().getItem(13).getItemMeta() != null) {
+            if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
+                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
+                    event.getInventory().setItem(40, getConfirmStack());
+                } else {
+                    event.getInventory().setItem(40, getMaxLevelReacedStack());
+                }
+            } else {
+                event.getInventory().setItem(40, getUnavailableStack());
             }
         }
     }
