@@ -154,7 +154,6 @@ public class MemoryCommand implements TabExecutor, Listener {
             }
         }
 
-
         gui.setItem(secondSlotDown, null);
 
         gui.setItem(fifthSlotDown, getUnavailableStack());
@@ -178,6 +177,13 @@ public class MemoryCommand implements TabExecutor, Listener {
                 if (clickedMeta.getPersistentDataContainer().has(confirmInvKey)) {
                     plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
                     plugin.saveConfig();
+
+                    event.getView().getTopInventory().getItem(13).setAmount(event.getView().getTopInventory().getItem(13).getAmount() - 1);
+                    if (event.getView().getTopInventory().getItem(13) != null) {
+                        player.getInventory().addItem(event.getView().getTopInventory().getItem(13));
+                    }
+
+                    event.getView().close();
 
                     player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
                     player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
