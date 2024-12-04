@@ -1,19 +1,13 @@
 package org.kazzleinc.memorySMP.commands;
 
-import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
-import io.papermc.paper.event.player.PlayerPickItemEvent;
 import org.bukkit.*;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.InventoryBlockStartEvent;
 import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -89,7 +83,7 @@ public class MemoryCommand implements TabExecutor, Listener {
         return confirmStack;
     }
 
-    private ItemStack getMaxLevelReacedStack() {
+    private ItemStack getMaxLevelReachedStack() {
         ItemStack unavailStack = new ItemStack(Material.BARRIER);
         ItemMeta unavailStackMeta = unavailStack.getItemMeta();
 
@@ -195,7 +189,7 @@ public class MemoryCommand implements TabExecutor, Listener {
                     if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
                         event.getInventory().setItem(40, getConfirmStack());
                     } else {
-                        event.getInventory().setItem(40, getMaxLevelReacedStack());
+                        event.getInventory().setItem(40, getMaxLevelReachedStack());
                     }
                 } else {
                     event.getInventory().setItem(40, getUnavailableStack());

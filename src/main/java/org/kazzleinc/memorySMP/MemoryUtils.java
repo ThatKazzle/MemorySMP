@@ -37,44 +37,4 @@ public class MemoryUtils {
 
         return titleCase.toString();
     }
-
-    public static ItemStack getConfirmStack() {
-        ItemStacpublic  static rmStack = new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
-        ItemMeta confirmStackMeta = confirmStack.getItemMeta();
-
-        confirmStackMeta.setItemName("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?");
-        confirmStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        confirmStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
-        confirmStackMeta.getPersistentDataContainer().set(confirmInvKey, PersistentDataType.BOOLEAN, true);
-
-        confirmStack.setItemMeta(confirmStackMeta);
-
-        return confirmStack;
-    }
-
-    public static ItemStack getMaxLevelReacedStack() {
-        ItemStack unavailStack = new ItemStack(Material.BARRIER);
-        ItemMeta unavailStackMeta = unavailStack.getItemMeta();
-
-        unavailStackMeta.setItemName("" + ChatColor.RED + ChatColor.BOLD + "Max level membrane reached.");
-        unavailStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        unavailStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
-
-        unavailStack.setItemMeta(unavailStackMeta);
-
-        return unavailStack;
-    }
-
-    public static ItemStack getUnavailableStack() {
-        ItemStack unavailStack = new ItemStack(Material.BARRIER);
-        ItemMeta unavailStackMeta = unavailStack.getItemMeta();
-
-        unavailStackMeta.setItemName("" + ChatColor.RED + ChatColor.BOLD + "No upgrader has been given.");
-        unavailStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-        unavailStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
-
-        unavailStack.setItemMeta(unavailStackMeta);
-
-        return unavailStack;
-    }
 }
