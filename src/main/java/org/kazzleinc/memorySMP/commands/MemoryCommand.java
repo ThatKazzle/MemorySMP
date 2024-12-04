@@ -171,27 +171,32 @@ public class MemoryCommand implements TabExecutor, Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
-            if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
-                    event.getInventory().setItem(40, getConfirmStack());
-                } else {
-                    event.getInventory().setItem(40, getMaxLevelReacedStack());
+            if (event.getCurrentItem() != null) {
+                ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
+
+                if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {
+                    event.setCancelled(true);
                 }
-            } else {
-                event.getInventory().setItem(40, getUnavailableStack());
+
+                if (clickedMeta.getPersistentDataContainer().has(confirmInvKey)) {
+                    plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
+                    plugin.saveConfig();
+
+                    player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
+                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
+                }
             }
-            ItemMeta clickedMeta = player.getItemOnCursor().getItemMeta();
 
-            if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {
-                event.setCancelled(true);
-            }
-
-            if (clickedMeta.getPersistentDataContainer().has(confirmInvKey)) {
-                plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
-                plugin.saveConfig();
-
-                player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
-                player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
+            if (event.getView().getTopInventory().getItem(13) != null && event.getView().getTopInventory().getItem(13).getItemMeta() != null) {
+                if (event.getView().getTopInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
+                    if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
+                        event.getInventory().setItem(40, getConfirmStack());
+                    } else {
+                        event.getInventory().setItem(40, getMaxLevelReacedStack());
+                    }
+                } else {
+                    event.getInventory().setItem(40, getUnavailableStack());
+                }
             }
         }
     }
