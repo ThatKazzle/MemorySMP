@@ -169,6 +169,7 @@ public class MemoryCommand implements TabExecutor, Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
+            player.sendMessage("This is the right view to be updating.");
             if (event.getCurrentItem() != null) {
                 ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
 
@@ -200,10 +201,10 @@ public class MemoryCommand implements TabExecutor, Listener {
     }
     @EventHandler
     public void onInventoryPickupItemEvent(InventoryPickupItemEvent event) {
-        Player player = (Player) event.getInventory().getViewers().get(0);
+        Player player = (Player) event.getInventory().getViewers().getFirst();
         if (event.getInventory().getItem(13) != null && event.getInventory().getItem(13).getItemMeta() != null) {
             if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
+                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
                     event.getInventory().setItem(40, getConfirmStack());
                 } else {
                     event.getInventory().setItem(40, getMaxLevelReacedStack());
