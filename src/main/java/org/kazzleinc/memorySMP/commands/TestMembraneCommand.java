@@ -15,8 +15,12 @@ import org.kazzleinc.memorySMP.UpgraderItemClass;
 public class TestMembraneCommand implements CommandExecutor {
     MemorySMP plugin;
 
+    UpgraderItemClass upgraderItemClass;
+
     public TestMembraneCommand(MemorySMP plugin) {
         this.plugin = plugin;
+
+        upgraderItemClass = new UpgraderItemClass(plugin);
     }
 
     @Override
@@ -24,14 +28,14 @@ public class TestMembraneCommand implements CommandExecutor {
         if (commandSender instanceof Player) {
             Player sender = (Player) commandSender;
 
-            ItemStack testStack = new ItemStack(Material.NETHER_STAR);
-            ItemMeta testStackMeta = testStack.getItemMeta();
+            //ItemStack testStack = new ItemStack(Material.NETHER_STAR);
+            //ItemMeta testStackMeta = testStack.getItemMeta();
 
-            testStackMeta.getPersistentDataContainer().set(plugin.membraneItemKey, PersistentDataType.STRING,  strings[0]);
-            testStackMeta.setDisplayName(strings[0] + " membrane");
-            testStack.setItemMeta(testStackMeta);
+            //testStackMeta.getPersistentDataContainer().set(plugin.membraneItemKey, PersistentDataType.STRING,  strings[0]);
+            //testStackMeta.setDisplayName(strings[0] + " membrane");
+            //testStack.setItemMeta(testStackMeta);
 
-            sender.getInventory().addItem(UpgraderItemClass.createUpgraderItemStack());
+            sender.getInventory().addItem(upgraderItemClass.createUpgraderItemStack());
 
             return true;
         } else {

@@ -16,11 +16,12 @@ public class UpgraderItemClass {
         this.plugin = plugin;
     }
 
-    public static ItemStack createUpgraderItemStack() {
+    public ItemStack createUpgraderItemStack() {
+
         ItemStack upgraderStack = new ItemStack(Material.TRIAL_KEY);
         ItemMeta upgraderItemMeta = upgraderStack.getItemMeta();
 
-        upgraderItemMeta.getPersistentDataContainer().set(MemoryUtils.membraneItemKey, PersistentDataType.BOOLEAN, true);
+        upgraderItemMeta.getPersistentDataContainer().set(plugin.upgraderItemKey, PersistentDataType.BOOLEAN, true);
 
         upgraderItemMeta.setDisplayName("" + ChatColor.GOLD + "Membrane Upgrader");
         upgraderItemMeta.setLore(List.of(" " + "" + ChatColor.AQUA + "Use this to upgrade your " + ChatColor.GREEN + ChatColor.BOLD + "Membrane", "" + ChatColor.AQUA + " to the next level."));

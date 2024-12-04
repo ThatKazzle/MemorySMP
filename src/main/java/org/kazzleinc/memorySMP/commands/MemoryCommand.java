@@ -165,21 +165,25 @@ public class MemoryCommand implements TabExecutor, Listener {
         // Prevent players from picking up items in the "Memory Upgrade" inventory
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
-            if (
-                    clickedMeta.getDisplayName().equals("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A")
-                    || clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")
-                    || clickedMeta.getDisplayName().contains("" + ChatColor.RESET + ChatColor.GREEN + ChatColor.BOLD + " Membrane"))
-            {
+//            if (
+//                    clickedMeta.getDisplayName().equals("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A")
+//                    || clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")
+//                    || clickedMeta.getDisplayName().contains("" + ChatColor.RESET + ChatColor.GREEN + ChatColor.BOLD + " Membrane"))
+//            {
+//                event.setCancelled(true);
+//            }
+
+            if (event.getClickedInventory() == event.getView().getTopInventory()) {
                 event.setCancelled(true);
-            }
 
-            if (clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")) {
-                plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
-                plugin.saveConfig();
+                if (clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")) {
+                    plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
+                    plugin.saveConfig();
 
-                player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
-                player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
+                    player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
+                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
 
+                }
             }
         }
     }
