@@ -175,7 +175,6 @@ public class MemoryCommand implements TabExecutor, Listener {
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             player.sendMessage("This is the right view to be updating.");
             if (event.getCurrentItem() != null) {
-                event.getInventory().setItem(40, getUnavailableStack());
                 ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
 
                 if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {

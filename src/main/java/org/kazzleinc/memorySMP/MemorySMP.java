@@ -19,6 +19,8 @@ import org.kazzleinc.memorySMP.membranes.*;
 
 import java.util.Objects;
 
+import static org.kazzleinc.memorySMP.MemoryUtils.*;
+
 public final class MemorySMP extends JavaPlugin implements Listener {
 
     public NamespacedKey membraneItemKey = new NamespacedKey(this, "membrane_item");
@@ -78,6 +80,28 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 }
             }
         }.runTaskTimer(this, 0, 20);
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.getOpenInventory().getTopInventory().getItem(13) != null && player.getOpenInventory().getTopInventory().getItem(13).getItemMeta() != null) {
+                        if (player.getOpenInventory().getTopInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(upgraderItemKey)) {
+                            if (getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
+                                player.getOpenInventory().setItem(40, getConfirmStack());
+                            } else {
+                                player.getOpenInventory().setItem(40, getMaxLevelReacedStack());
+                            }
+                        } else {
+                            player.getOpenInventory().setItem(40, getUnavailableStack());
+                        }
+                    } else {
+                        player.getOpenInventory().setItem(40, getUnavailableStack());
+                    }
+                }
+            }
+        }.runTaskTimer(this, 0, 10);
     }
 
     @Override
