@@ -22,6 +22,7 @@ import java.util.Objects;
 public final class MemorySMP extends JavaPlugin implements Listener {
 
     public NamespacedKey membraneItemKey = new NamespacedKey(this, "membrane_item");
+    public NamespacedKey upgraderItemKey = new NamespacedKey(this, "upgrader_item");
 
     TestMembraneCommand testMembraneCommand = new TestMembraneCommand(this);
 

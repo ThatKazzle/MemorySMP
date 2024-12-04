@@ -102,8 +102,8 @@ public class MemoryCommand implements TabExecutor, Listener {
 
         for (String powerName : plugin.getConfig().getConfigurationSection("players." + player.getName() + ".membranes").getKeys(false)) {
             if (plugin.getConfig().getBoolean("players." + player.getName() + ".membranes." + powerName)) {
-                membraneItemMeta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.LIGHT_PURPLE + MemoryUtils.toTitleCase(powerName) + " Membrane");
-                membraneItemMeta.setLore(List.of(ChatColor.LIGHT_PURPLE + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1)));
+                membraneItemMeta.setDisplayName("" + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + MemoryUtils.toTitleCase(powerName) + ChatColor.RESET + ChatColor.GREEN + ChatColor.BOLD + " Membrane");
+                membraneItemMeta.setLore(List.of(ChatColor.LIGHT_PURPLE + "- Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1)));
 
                 membraneStack.setItemMeta(membraneItemMeta);
 
