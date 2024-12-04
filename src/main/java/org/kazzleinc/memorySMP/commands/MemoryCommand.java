@@ -1,9 +1,6 @@
 package org.kazzleinc.memorySMP.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,6 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kazzleinc.memorySMP.MemorySMP;
@@ -30,6 +28,9 @@ import java.util.stream.Collectors;
 
 public class MemoryCommand implements TabExecutor, Listener {
     MemorySMP plugin;
+
+    public NamespacedKey inventoryKey = new NamespacedKey("inventories", "membrane_inventory");
+    public NamespacedKey confirmInvKey = new NamespacedKey("inventories", "membrane_inventory_confirm");
 
     public MemoryCommand(MemorySMP plugin) {
         this.plugin = plugin;
@@ -78,6 +79,8 @@ public class MemoryCommand implements TabExecutor, Listener {
 
         confirmStackMeta.setItemName("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?");
         confirmStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        confirmStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
+        confirmStackMeta.getPersistentDataContainer().set(confirmInvKey, PersistentDataType.BOOLEAN, true);
 
         confirmStack.setItemMeta(confirmStackMeta);
 
@@ -90,6 +93,7 @@ public class MemoryCommand implements TabExecutor, Listener {
 
         unavailStackMeta.setItemName("" + ChatColor.RED + ChatColor.BOLD + "Max level membrane reached.");
         unavailStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        unavailStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
 
         unavailStack.setItemMeta(unavailStackMeta);
 
@@ -102,6 +106,7 @@ public class MemoryCommand implements TabExecutor, Listener {
 
         unavailStackMeta.setItemName("" + ChatColor.RED + ChatColor.BOLD + "No upgrader has been given.");
         unavailStackMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS, ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        unavailStackMeta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
 
         unavailStack.setItemMeta(unavailStackMeta);
 
@@ -113,14 +118,15 @@ public class MemoryCommand implements TabExecutor, Listener {
         Inventory gui = Bukkit.createInventory(player, 54, "" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ");
 
         // Create the red stained glass pane item
-
+        ItemStack redPane = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        ItemMeta meta = redPane.getItemMeta();
 
         // Fill the inventory with red stained-glass panes
         for (int i = 0; i < gui.getSize(); i++) {
-            ItemStack redPane = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-            ItemMeta meta = redPane.getItemMeta();
+
             if (meta != null) {
                 meta.setDisplayName("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A"); // Set empty display name
+                meta.getPersistentDataContainer().set(inventoryKey, PersistentDataType.BOOLEAN, true);
                 //meta.setDisplayName("Index " + i);
                 redPane.setItemMeta(meta);
             }
@@ -164,40 +170,28 @@ public class MemoryCommand implements TabExecutor, Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
                 if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
-                    event.getInventory().setItem(49, getConfirmStack());
+                    event.getInventory().setItem(40, getConfirmStack());
                 } else {
-                    event.getInventory().setItem(49, getMaxLevelReacedStack());
+                    event.getInventory().setItem(40, getMaxLevelReacedStack());
                 }
             } else {
-                event.getInventory().setItem(49, getUnavailableStack());
+                event.getInventory().setItem(40, getUnavailableStack());
             }
-        }
-        // Prevent players from picking up items in the "Memory Upgrade" inventory
-        if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
-//            if (
-//                    clickedMeta.getDisplayName().equals("" + ChatColor.RESET + ChatColor.BOLD + ChatColor.RED + ChatColor.MAGIC + "A")
-//                    || clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")
-//                    || clickedMeta.getDisplayName().contains("" + ChatColor.RESET + ChatColor.GREEN + ChatColor.BOLD + " Membrane"))
-//            {
-//                event.setCancelled(true);
-//            }
 
-            if (event.getClickedInventory() == event.getView().getTopInventory()) {
+            if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {
                 event.setCancelled(true);
+            }
 
-                if (clickedMeta.getDisplayName().equals("" + ChatColor.GOLD + ChatColor.BOLD + "Confirm?")) {
-                    plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
-                    plugin.saveConfig();
+            if (clickedMeta.getPersistentDataContainer().has(confirmInvKey)) {
+                plugin.getConfig().set("players." + player.getName() + ".membranes.level", plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + 1);
+                plugin.saveConfig();
 
-                    player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
-                    player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
-
-                }
+                player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.f, 1.f);
+                player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
             }
         }
     }
