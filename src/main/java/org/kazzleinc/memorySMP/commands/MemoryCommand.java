@@ -11,8 +11,10 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -162,6 +164,18 @@ public class MemoryCommand implements TabExecutor, Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+
+        if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
+            if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
+                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
+                    event.getInventory().setItem(49, getConfirmStack());
+                } else {
+                    event.getInventory().setItem(49, getMaxLevelReacedStack());
+                }
+            } else {
+                event.getInventory().setItem(49, getUnavailableStack());
+            }
+        }
         // Prevent players from picking up items in the "Memory Upgrade" inventory
         if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
             ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
@@ -184,27 +198,6 @@ public class MemoryCommand implements TabExecutor, Listener {
                     player.sendMessage(ChatColor.LIGHT_PURPLE + "Your membrane has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
 
                 }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onInventoryInteract(InventoryInteractEvent event) {
-        Player player = (Player) event.getWhoClicked();
-
-        player.sendMessage("view title: " + event.getView().getTitle());
-        player.sendMessage("clicked item title: " + player.getItemOnCursor());
-        player.sendMessage("item 13: " + event.getInventory().getItem(13).getItemMeta().getDisplayName());
-        player.sendMessage("has upgraderItemKey: " + String.valueOf(event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)));
-        if (event.getView().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
-            if (event.getInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 2) {
-                    event.getInventory().setItem(49, getConfirmStack());
-                } else {
-                    event.getInventory().setItem(49, getMaxLevelReacedStack());
-                }
-            } else {
-                event.getInventory().setItem(49, getUnavailableStack());
             }
         }
     }
