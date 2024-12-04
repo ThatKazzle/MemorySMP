@@ -180,7 +180,7 @@ public class MemoryCommand implements TabExecutor, Listener {
             } else {
                 event.getInventory().setItem(40, getUnavailableStack());
             }
-            ItemMeta clickedMeta = event.getCurrentItem().getItemMeta();
+            ItemMeta clickedMeta = player.getItemOnCursor().getItemMeta();
 
             if (clickedMeta.getPersistentDataContainer().has(inventoryKey)) {
                 event.setCancelled(true);
