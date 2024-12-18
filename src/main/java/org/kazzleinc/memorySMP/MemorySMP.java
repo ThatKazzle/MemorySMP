@@ -176,6 +176,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 int index = random.nextInt(options.size());
                 String title = ChatColor.GOLD + "Randomizing...";
                 String subtitle = options.get(index);
+<<<<<<< HEAD
 
                 player.sendTitle(title, subtitle, 0, 20, 0); // Updated to ensure subtitle refreshes
 
@@ -183,12 +184,28 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                     player.sendTitle(ChatColor.GOLD + "You now have: ", subtitle, 10, 80, 20);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 2.f);
 
+=======
+                player.sendTitle(title, subtitle, 0, 20, 0); // Updated to ensure subtitle refreshes
+
+                // Adjust delay to slow down over time
+                if (ticks < maxTicks) {
+                    ticks += step;
+                    if (ticks % 10 == 0 && delay < 20) delay += 1; // Increase delay gradually
+                    this.runTaskLater(MemorySMP.this, delay); // Schedule next update
+                } else {
+                    // Stop the cycle and select the final result
+                    String finalResult = options.get(random.nextInt(options.size()));
+                    player.sendTitle(ChatColor.GOLD + "Result:", finalResult, 10, 70, 20); // Longer display for the final result
+>>>>>>> origin/main
                     this.cancel();
                 } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 0.7f);
                 }
+<<<<<<< HEAD
 
                 ticks++;
+=======
+>>>>>>> origin/main
             }
         }.runTaskTimer(this, 0, 5);
     }
