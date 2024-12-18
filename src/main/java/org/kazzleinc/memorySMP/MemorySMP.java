@@ -19,6 +19,7 @@ import org.kazzleinc.memorySMP.commands.UsePowerCommand;
 import org.kazzleinc.memorySMP.membranes.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -140,18 +141,14 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 saveConfig();
             }
             if (item == null || item.getType() != Material.STICK) return; // Replace with your custom item
-
             // List of strings to randomize
-            List<String> options = List.of(
-                    ChatColor.RED + "Option 1",
-                    ChatColor.GREEN + "Option 2",
-                    ChatColor.BLUE + "Option 3",
-                    ChatColor.YELLOW + "Option 4",
-                    ChatColor.AQUA + "Option 5"
-            );
+
+            List<String> options = List.of();
+            for (String key : getConfig().getConfigurationSection("available-mebranes").getKeys(false)) {
+                options.add(toTitleCase(key));
+            }
 
             startRandomizing(event.getPlayer().getName(), options);
-
         }
 
     }
@@ -183,6 +180,12 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                     player.sendTitle(ChatColor.GOLD + "You now have: ", subtitle, 10, 80, 20);
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 2.f);
 
+                    getConfig().set("players." + playerName + ".membranes." + getPlayerMembrane(playerName), false);
+                    getConfig().set("players." + playerName + ".membranes." + subtitle, true);
+
+                    saveConfig();
+
+                    this.cancel();
                 } else {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 0.7f);
                 }
@@ -230,5 +233,26 @@ public final class MemorySMP extends JavaPlugin implements Listener {
         unavailStack.setItemMeta(unavailStackMeta);
 
         return unavailStack;
+    }
+
+    public String getPlayerMembrane(String playerName) {
+        // Navigate to the player's membranes section in the config
+        String path = "players." + playerName + ".membranes";
+        if (!getConfig().isConfigurationSection(path)) {
+            return null; // No membranes section for this player
+        }
+
+        // Retrieve the player's membranes configuration
+        Map<String, Object> membranes = getConfig().getConfigurationSection(path).getValues(false);
+
+        // Iterate through the membranes to find the one set to true
+        for (Map.Entry<String, Object> entry : membranes.entrySet()) {
+            if (entry.getValue() instanceof Boolean && (Boolean) entry.getValue()) {
+                return entry.getKey(); // Return the key of the true membrane
+            }
+        }
+
+        // No membrane is set to true
+        return null;
     }
 }
