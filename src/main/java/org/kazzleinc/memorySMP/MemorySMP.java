@@ -1,9 +1,6 @@
 package org.kazzleinc.memorySMP;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -142,33 +139,34 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 item.setAmount(item.getAmount() - 1);
                 saveConfig();
             }
+            if (item == null || item.getType() != Material.STICK) return; // Replace with your custom item
+
+            // List of strings to randomize
+            List<String> options = List.of(
+                    ChatColor.RED + "Option 1",
+                    ChatColor.GREEN + "Option 2",
+                    ChatColor.BLUE + "Option 3",
+                    ChatColor.YELLOW + "Option 4",
+                    ChatColor.AQUA + "Option 5"
+            );
+
+            startRandomizing(event.getPlayer().getName(), options);
+
         }
-        if (item == null || item.getType() != Material.STICK) return; // Replace with your custom item
 
-        // List of strings to randomize
-        List<String> options = List.of(
-                ChatColor.RED + "Option 1",
-                ChatColor.GREEN + "Option 2",
-                ChatColor.BLUE + "Option 3",
-                ChatColor.YELLOW + "Option 4",
-                ChatColor.AQUA + "Option 5"
-        );
-
-        startRandomizing(event.getPlayer().getName(), options);
     }
 
     private void startRandomizing(String playerName, List<String> options) {
         new BukkitRunnable() {
-
             private int ticks = 0;
-            private int maxTicks = 100; // Total duration in ticks (~5 seconds)
+            private int prevTick = 100; // Total duration in ticks (~5 seconds)
             private int delay = 2;      // Initial delay in ticks
             private int step = 1;       // Initial step between updates
 
             @Override
             public void run() {
                 // Get the player
-                var player = Bukkit.getPlayer(playerName);
+                Player player = Bukkit.getPlayer(playerName);
                 if (player == null || !player.isOnline()) {
                     this.cancel();
                     return;
@@ -178,23 +176,23 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 int index = random.nextInt(options.size());
                 String title = ChatColor.GOLD + "Randomizing...";
                 String subtitle = options.get(index);
-                player.sendTitle(title, subtitle, 0, 20, 0);
 
-                // Adjust delay to slow down over time
-                if (ticks < maxTicks) {
-                    ticks += step;
-                    if (ticks % 10 == 0 && delay < 20) delay += 1; // Increase delay gradually
-                } else {
-                    // Stop the cycle and select the final result
-                    String finalResult = options.get(random.nextInt(options.size()));
-                    player.sendTitle(ChatColor.GOLD + "Result:", finalResult, 10, 60, 10);
+                player.sendTitle(title, subtitle, 0, 20, 0); // Updated to ensure subtitle refreshes
+
+                if (ticks > 20) {
+                    player.sendTitle(ChatColor.GOLD + "You now have: ", subtitle, 10, 80, 20);
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 2.f);
+
                     this.cancel();
+                } else {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.f, 0.7f);
                 }
 
-                this.runTaskLater(MemorySMP.this, delay);
+                ticks++;
             }
-        }.runTaskLater(this, 0);
+        }.runTaskTimer(this, 0, 5);
     }
+
 
     private ItemStack getConfirmStack() {
         ItemStack confirmStack = new ItemStack(Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
