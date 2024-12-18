@@ -21,14 +21,18 @@ import org.kazzleinc.memorySMP.commands.TestMembraneCommand;
 import org.kazzleinc.memorySMP.commands.UsePowerCommand;
 import org.kazzleinc.memorySMP.membranes.*;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static org.kazzleinc.memorySMP.MemoryUtils.*;
 
 public final class MemorySMP extends JavaPlugin implements Listener {
+    private final Random random = new Random();
 
     public NamespacedKey membraneItemKey = new NamespacedKey(this, "membrane_item");
     public NamespacedKey upgraderItemKey = new NamespacedKey(this, "upgrader_item");
+    public NamespacedKey randomizerItemKey = new NamespacedKey(this, "randomizer_item");
 
     public NamespacedKey inventoryKey = new NamespacedKey("inventories", "membrane_inventory");
     public NamespacedKey confirmInvKey = new NamespacedKey("inventories", "membrane_inventory_confirm");
@@ -139,6 +143,57 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                 saveConfig();
             }
         }
+        if (item == null || item.getType() != Material.STICK) return; // Replace with your custom item
+
+        // List of strings to randomize
+        List<String> options = List.of(
+                ChatColor.RED + "Option 1",
+                ChatColor.GREEN + "Option 2",
+                ChatColor.BLUE + "Option 3",
+                ChatColor.YELLOW + "Option 4",
+                ChatColor.AQUA + "Option 5"
+        );
+
+        startRandomizing(event.getPlayer().getName(), options);
+    }
+
+    private void startRandomizing(String playerName, List<String> options) {
+        new BukkitRunnable() {
+
+            private int ticks = 0;
+            private int maxTicks = 100; // Total duration in ticks (~5 seconds)
+            private int delay = 2;      // Initial delay in ticks
+            private int step = 1;       // Initial step between updates
+
+            @Override
+            public void run() {
+                // Get the player
+                var player = Bukkit.getPlayer(playerName);
+                if (player == null || !player.isOnline()) {
+                    this.cancel();
+                    return;
+                }
+
+                // Calculate current index and send the title
+                int index = random.nextInt(options.size());
+                String title = ChatColor.GOLD + "Randomizing...";
+                String subtitle = options.get(index);
+                player.sendTitle(title, subtitle, 0, 20, 0);
+
+                // Adjust delay to slow down over time
+                if (ticks < maxTicks) {
+                    ticks += step;
+                    if (ticks % 10 == 0 && delay < 20) delay += 1; // Increase delay gradually
+                } else {
+                    // Stop the cycle and select the final result
+                    String finalResult = options.get(random.nextInt(options.size()));
+                    player.sendTitle(ChatColor.GOLD + "Result:", finalResult, 10, 60, 10);
+                    this.cancel();
+                }
+
+                this.runTaskLater(MemorySMP.this, delay);
+            }
+        }.runTaskLater(this, 0);
     }
 
     private ItemStack getConfirmStack() {

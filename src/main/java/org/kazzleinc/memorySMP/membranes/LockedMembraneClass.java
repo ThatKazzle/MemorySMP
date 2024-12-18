@@ -50,7 +50,6 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
         }
 
     }
-
     @Override
     public void action2(Player player) {
         player.sendMessage("AH ! ACTION TWO !");
