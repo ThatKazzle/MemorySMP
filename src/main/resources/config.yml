@@ -3,9 +3,15 @@ players:
     membranes:
       locked: true
 available-membranes:
-  locked: true
-  scorching: true
-  mobility: true
-  gamble: true
-  spirit: true
-  void: true
+  locked:
+    power-names: [Item Safe, Player Hook]
+  scorching:
+    power-names: [Sonic Blaze, Fresh Start]
+  mobility:
+    power-names: [Jump for the Beef, Tide Boost]
+  gamble:
+    power-names: [Blackjack, The Dealer]
+  spirit:
+    power-names: [Domain Rift, Phantom Dash]
+  void:
+    power-names: [Dodge And Weave, Ender Storm]

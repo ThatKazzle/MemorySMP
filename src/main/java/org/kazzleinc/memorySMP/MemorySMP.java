@@ -96,9 +96,23 @@ public final class MemorySMP extends JavaPlugin implements Listener {
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (player.getOpenInventory().getTitle().equals("" + ChatColor.BOLD + ChatColor.RED + "Upgrade your Membrane: ")) {
-                        if (player.getOpenInventory().getTopInventory().getItem(13) != null && player.getOpenInventory().getTopInventory().getItem(13).getItemMeta() != null) {
-                            if (player.getOpenInventory().getTopInventory().getItem(13).getItemMeta().getPersistentDataContainer().has(upgraderItemKey)) {
-                                if (getConfig().getInt("players." + player.getName() + ".membranes.level", 1) < 3) {
+                        if (player.getOpenInventory().getTopInventory().getItem(12) != null && player.getOpenInventory().getTopInventory().getItem(12).getItemMeta() != null) {
+                            if (player.getOpenInventory().getTopInventory().getItem(12).getItemMeta().getPersistentDataContainer().has(upgraderItemKey)) {
+                                if (getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) < 3) {
+                                    player.getOpenInventory().setItem(40, getConfirmStack());
+                                } else {
+                                    player.getOpenInventory().setItem(40, getMaxLevelReachedStack());
+                                }
+                            } else {
+                                player.getOpenInventory().setItem(40, getUnavailableStack());
+                            }
+                        } else {
+                            player.getOpenInventory().setItem(40, getUnavailableStack());
+                        }
+
+                        if (player.getOpenInventory().getTopInventory().getItem(14) != null && player.getOpenInventory().getTopInventory().getItem(14).getItemMeta() != null) {
+                            if (player.getOpenInventory().getTopInventory().getItem(14).getItemMeta().getPersistentDataContainer().has(upgraderItemKey)) {
+                                if (getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) < 3) {
                                     player.getOpenInventory().setItem(40, getConfirmStack());
                                 } else {
                                     player.getOpenInventory().setItem(40, getMaxLevelReachedStack());
