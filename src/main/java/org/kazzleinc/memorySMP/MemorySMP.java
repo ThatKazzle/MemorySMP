@@ -106,11 +106,8 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                             } else {
                                 player.getOpenInventory().setItem(40, getUnavailableStack());
                             }
-                        } else {
-                            player.getOpenInventory().setItem(40, getUnavailableStack());
-                        }
-
-                        if (player.getOpenInventory().getTopInventory().getItem(14) != null && player.getOpenInventory().getTopInventory().getItem(14).getItemMeta() != null) {
+                        } else if (player.getOpenInventory().getTopInventory().getItem(14) != null && player.getOpenInventory().getTopInventory().getItem(14).getItemMeta() != null) {
+                            //player.getOpenInventory().setItem(40, getUnavailableStack());
                             if (player.getOpenInventory().getTopInventory().getItem(14).getItemMeta().getPersistentDataContainer().has(upgraderItemKey)) {
                                 if (getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) < 3) {
                                     player.getOpenInventory().setItem(40, getConfirmStack());
@@ -123,6 +120,8 @@ public final class MemorySMP extends JavaPlugin implements Listener {
                         } else {
                             player.getOpenInventory().setItem(40, getUnavailableStack());
                         }
+
+
                     }
                 }
             }
