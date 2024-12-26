@@ -190,17 +190,23 @@ public class MemoryCommand implements TabExecutor, Listener {
                     plugin.saveConfig();
                     if (event.getView().getTopInventory().getItem(12) != null) {
                         event.getView().getTopInventory().getItem(12).setAmount(event.getView().getTopInventory().getItem(12).getAmount() - 1);
+                        if (event.getView().getTopInventory().getItem(12) != null) {
+                            player.getInventory().addItem(event.getView().getTopInventory().getItem(12));
+                        }
                         plugin.getConfig().set("players." + player.getName() + ".membranes.primLevel", plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) + 1);
-                        player.getInventory().addItem(event.getView().getTopInventory().getItem(12));
-                        player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName).getFirst() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
+                        player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName + ".power-names").getFirst() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
                     }
 
                     if (event.getView().getTopInventory().getItem(14) != null) {
                         event.getView().getTopInventory().getItem(14).setAmount(event.getView().getTopInventory().getItem(14).getAmount() - 1);
-                        player.getInventory().addItem(event.getView().getTopInventory().getItem(14));
+                        if (event.getView().getTopInventory().getItem(14) != null) {
+                            player.getInventory().addItem(event.getView().getTopInventory().getItem(14));
+                        }
                         plugin.getConfig().set("players." + player.getName() + ".membranes.secLevel", plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) + 1);
-                        player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName).getLast() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
+                        player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName + ".power-names").getLast() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
                     }
+
+                    plugin.saveConfig();
 
                     event.getView().close();
 
