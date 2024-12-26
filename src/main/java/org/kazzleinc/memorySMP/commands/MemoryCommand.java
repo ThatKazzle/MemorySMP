@@ -20,6 +20,7 @@ import org.kazzleinc.memorySMP.MemoryUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MemoryCommand implements TabExecutor, Listener {
@@ -188,19 +189,19 @@ public class MemoryCommand implements TabExecutor, Listener {
 
                 if (clickedMeta.getPersistentDataContainer().has(confirmInvKey)) {
                     plugin.saveConfig();
-                    if (event.getView().getTopInventory().getItem(12) != null) {
+                    if (event.getView().getTopInventory().getItem(12) != null && plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel") < 3) {
                         event.getView().getTopInventory().getItem(12).setAmount(event.getView().getTopInventory().getItem(12).getAmount() - 1);
                         if (event.getView().getTopInventory().getItem(12) != null) {
-                            player.getInventory().addItem(event.getView().getTopInventory().getItem(12));
+                            player.getInventory().addItem(Objects.requireNonNull(event.getView().getTopInventory().getItem(12)));
                         }
                         plugin.getConfig().set("players." + player.getName() + ".membranes.primLevel", plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) + 1);
                         player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName + ".power-names").getFirst() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
                     }
 
-                    if (event.getView().getTopInventory().getItem(14) != null) {
+                    if (event.getView().getTopInventory().getItem(14) != null && plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel") < 3) {
                         event.getView().getTopInventory().getItem(14).setAmount(event.getView().getTopInventory().getItem(14).getAmount() - 1);
                         if (event.getView().getTopInventory().getItem(14) != null) {
-                            player.getInventory().addItem(event.getView().getTopInventory().getItem(14));
+                            player.getInventory().addItem(Objects.requireNonNull(event.getView().getTopInventory().getItem(14)));
                         }
                         plugin.getConfig().set("players." + player.getName() + ".membranes.secLevel", plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) + 1);
                         player.sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + playerMembraneName + ".power-names").getLast() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " has been upgraded to " + ChatColor.BOLD + "Level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ".");
@@ -229,6 +230,7 @@ public class MemoryCommand implements TabExecutor, Listener {
                     if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) < 3) {
                         event.getInventory().setItem(40, getConfirmStack());
                     } else {
+                        if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) < 3 || plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) < 3)
                         event.getInventory().setItem(40, getMaxLevelReachedStack());
                     }
                 } else {

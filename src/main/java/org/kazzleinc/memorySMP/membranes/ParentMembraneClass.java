@@ -2,6 +2,7 @@ package org.kazzleinc.memorySMP.membranes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -43,6 +44,23 @@ public abstract class ParentMembraneClass {
         } else {
             return "" + ChatColor.GREEN + ChatColor.BOLD + "Ready!";
         }
+    }
+
+    public String getPowerLevelColor(String playerName, Boolean isFirstPower, Configuration config) {
+        String colorToReturn = "";
+
+        int primLevel = config.getInt("players." + playerName + ".membranes.primLevel", 1);
+        int secLevel = config.getInt("players." + playerName + ".membranes.secLevel", 1);
+
+        int numToWorkWith = isFirstPower ? primLevel : secLevel;
+
+        switch (numToWorkWith) {
+            case 1 -> colorToReturn = "" + ChatColor.GREEN;
+            case 2 -> colorToReturn = "" + ChatColor.COLOR_CHAR + "#FFA500";
+            case 3 -> colorToReturn = "" + ChatColor.COLOR_CHAR + "#FF6EFF";
+        }
+
+        return colorToReturn;
     }
 
     public String formatCooldownTime(long totalSeconds) {

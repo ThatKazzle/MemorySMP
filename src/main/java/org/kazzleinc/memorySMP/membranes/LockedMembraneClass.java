@@ -57,7 +57,7 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
 
     @Override
     public void cooldownDisplay(Player player) {
-        player.sendActionBar(ChatColor.GREEN + "Slot Lock: " + getCooldownTimeLeft(player.getUniqueId(), cooldowns) + ChatColor.RESET + ChatColor.BOLD + ChatColor.GOLD + " | " + ChatColor.RESET + ChatColor.GREEN + "Cooldown 2: " + ChatColor.RESET + ChatColor.RED + ChatColor.BOLD + "NOT IMP");
+        player.sendActionBar(getPowerLevelColor(player.getName(), true, plugin.getConfig()) + "Slot Lock: " + getCooldownTimeLeft(player.getUniqueId(), cooldowns) + ChatColor.RESET + ChatColor.BOLD + ChatColor.GOLD + " | " + ChatColor.RESET + getPowerLevelColor(player.getName(), false, plugin.getConfig()) + "Cooldown 2: " + ChatColor.RESET + ChatColor.RED + ChatColor.BOLD + "NOT IMP");
     }
 
     @EventHandler

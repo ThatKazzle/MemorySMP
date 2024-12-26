@@ -1,5 +1,5 @@
 name: MemorySMP
-version: '1.0'
+version: ${project.version}
 main: org.kazzleinc.memorySMP.MemorySMP
 api-version: '1.21'
 commands:
