@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
@@ -56,8 +57,8 @@ public abstract class ParentMembraneClass {
 
         switch (numToWorkWith) {
             case 1 -> colorToReturn = "" + ChatColor.GREEN;
-            case 2 -> colorToReturn = "" + ChatColor.COLOR_CHAR + "#FFA500";
-            case 3 -> colorToReturn = "" + ChatColor.COLOR_CHAR + "#FF6EFF";
+            case 2 -> colorToReturn = "" + net.md_5.bungee.api.ChatColor.of(Color.orange) + "#FFA500";
+            case 3 -> colorToReturn = "" + net.md_5.bungee.api.ChatColor.of("#FF6EFF");
         }
 
         return colorToReturn;
