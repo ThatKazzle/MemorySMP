@@ -57,7 +57,7 @@ public abstract class ParentMembraneClass {
 
         switch (numToWorkWith) {
             case 1 -> colorToReturn = "" + ChatColor.GREEN;
-            case 2 -> colorToReturn = "" + net.md_5.bungee.api.ChatColor.of(Color.orange) + "#FFA500";
+            case 2 -> colorToReturn = "" + net.md_5.bungee.api.ChatColor.of(Color.orange);
             case 3 -> colorToReturn = "" + net.md_5.bungee.api.ChatColor.of("#FF6EFF");
         }
 
