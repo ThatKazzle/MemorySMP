@@ -147,8 +147,8 @@ public class MemoryCommand implements TabExecutor, Listener {
             if (plugin.getConfig().getBoolean("players." + player.getName() + ".membranes." + powerName)) {
                 membraneItemMeta.setDisplayName("" + ChatColor.RESET + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + MemoryUtils.toTitleCase(powerName) + ChatColor.RESET + ChatColor.GREEN + ChatColor.BOLD + " Membrane");
                 membraneItemMeta.setLore(List.of(
-                        "" + ChatColor.LIGHT_PURPLE + "- " + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + powerName).getFirst() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1),
-                        "" + ChatColor.LIGHT_PURPLE + "- " + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + powerName).getLast() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1)));
+                        "" + ChatColor.LIGHT_PURPLE + "- " + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + powerName + "power-names").getFirst() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1),
+                        "" + ChatColor.LIGHT_PURPLE + "- " + ChatColor.BOLD + plugin.getConfig().getStringList("available-membranes." + powerName + "power-names").getLast() + ChatColor.RESET + ChatColor.LIGHT_PURPLE + " level " + plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1)));
 
                 membraneStack.setItemMeta(membraneItemMeta);
 
