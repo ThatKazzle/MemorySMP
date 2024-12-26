@@ -158,7 +158,7 @@ public final class MemorySMP extends JavaPlugin implements Listener {
             // List of strings to randomize
 
             List<String> options = List.of();
-            for (String key : getConfig().getConfigurationSection("available-mebranes").getKeys(false)) {
+            for (String key : getConfig().getConfigurationSection("available-membranes").getKeys(false)) {
                 options.add(toTitleCase(key));
             }
 

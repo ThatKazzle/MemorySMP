@@ -219,7 +219,7 @@ public class MemoryCommand implements TabExecutor, Listener {
                 }
             } else if (event.getView().getTopInventory().getItem(14) != null && event.getView().getTopInventory().getItem(14).getItemMeta() != null) {
                 if (event.getView().getTopInventory().getItem(14).getItemMeta().getPersistentDataContainer().has(plugin.upgraderItemKey)) {
-                    if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.primLevel", 1) < 3) {
+                    if (plugin.getConfig().getInt("players." + player.getName() + ".membranes.secLevel", 1) < 3) {
                         event.getInventory().setItem(40, getConfirmStack());
                     } else {
                         event.getInventory().setItem(40, getMaxLevelReachedStack());
