@@ -89,10 +89,10 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
 
                 new BukkitRunnable() {
                     Player localHitPlayer = hitPlayer;
-                    int alpha = 0;
+                    double alpha = 0;
 
-                    Vector startPos = player.getLocation().toVector();
-                    Vector endPos = hitPlayer.getLocation().clone().toVector();
+                    Vector startPos = hitPlayer.getLocation().clone().toVector();
+                    Vector endPos = player.getLocation().toVector();
                     @Override
                     public void run() {
                         if (alpha >= 1) {
@@ -111,7 +111,6 @@ public class LockedMembraneClass extends ParentMembraneClass implements Listener
     public void freezeAction(Player player, Player hitPlayer) {
         isFrozen.put(hitPlayer.getUniqueId(), true);
         hitPlayer.setAllowFlight(true);
-
         BukkitTask soundRunner = new BukkitRunnable() {
             @Override
             public void run() {
