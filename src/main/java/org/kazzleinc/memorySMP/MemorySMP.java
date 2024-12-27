@@ -139,29 +139,21 @@ public final class MemorySMP extends JavaPlugin implements Listener {
         ItemStack item = event.getItem();
 
         if (event.getHand() == EquipmentSlot.HAND) {
-            if (item.getItemMeta().getPersistentDataContainer().has(membraneItemKey)) {
-                switch (Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(membraneItemKey, PersistentDataType.STRING))) {
-                    case "locked" -> {
+            if (item != null) {
+                if (item.getItemMeta().getPersistentDataContainer().has(membraneItemKey)) {
 
-                    }
-                    case "scorching" -> {
-
-                    }
                 }
 
-                getConfig().set("players." + player.getName() + ".membranes." + item.getItemMeta().getPersistentDataContainer().get(membraneItemKey, PersistentDataType.STRING), true);
-                item.setAmount(item.getAmount() - 1);
-                saveConfig();
-            }
-            if (item == null || item.getType() != Material.STICK) return; // Replace with your custom item
-            // List of strings to randomize
+                if (item.getType() != Material.STICK) return; // Replace with your custom item
 
-            List<String> options = List.of();
-            for (String key : getConfig().getConfigurationSection("available-membranes").getKeys(false)) {
-                options.add(toTitleCase(key));
+                List<String> options = List.of();
+                for (String key : getConfig().getConfigurationSection("available-membranes").getKeys(false)) {
+                    options.add(toTitleCase(key));
+                }
+
+                startRandomizing(event.getPlayer().getName(), options);
             }
 
-            startRandomizing(event.getPlayer().getName(), options);
         }
 
     }

@@ -3,6 +3,7 @@ package org.kazzleinc.memorySMP.membranes;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -50,8 +51,8 @@ public abstract class ParentMembraneClass {
     public String getPowerLevelColor(String playerName, Boolean isFirstPower, Configuration config) {
         String colorToReturn = "";
 
-        int primLevel = config.getInt("players." + playerName + ".membranes.primLevel", 1);
-        int secLevel = config.getInt("players." + playerName + ".membranes.secLevel", 1);
+        int primLevel = getPrimaryLevel(playerName, config);
+        int secLevel = getSecondaryLevel(playerName, config);
 
         int numToWorkWith = isFirstPower ? primLevel : secLevel;
 
@@ -62,6 +63,14 @@ public abstract class ParentMembraneClass {
         }
 
         return colorToReturn;
+    }
+
+    public int getPrimaryLevel(String playerName, Configuration config) {
+        return config.getInt("players." + playerName + ".membranes.primLevel", 1);
+    }
+
+    public int getSecondaryLevel(String playerName, Configuration config) {
+        return config.getInt("players." + playerName + ".membranes.secLevel", 1);
     }
 
     public String formatCooldownTime(long totalSeconds) {
@@ -100,5 +109,25 @@ public abstract class ParentMembraneClass {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Linearly interpolates between two positions.
+     *
+     * @param start The starting position as a Vector.
+     * @param end The ending position as a Vector.
+     * @param alpha The interpolation factor (0.0 to 1.0).
+     * @return A new Vector representing the interpolated position.
+     */
+    public static Vector lerp(Vector start, Vector end, double alpha) {
+        // Clamp alpha to range [0, 1]
+        alpha = Math.max(0, Math.min(1, alpha));
+
+        // Interpolate each component
+        double x = start.getX() + alpha * (end.getX() - start.getX());
+        double y = start.getY() + alpha * (end.getY() - start.getY());
+        double z = start.getZ() + alpha * (end.getZ() - start.getZ());
+
+        return new Vector(x, y, z);
     }
 }
